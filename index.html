@@ -1,0 +1,213 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>売り逃しCHECKER V4 | MARKET PULSE</title><meta name="description" content="電話番号なし。愛車の売り逃しリスクと中古車市場の現在地をチェック。"><style>
+:root{
+  --bg:#050505;--panel:#0e0f0d;--panel2:#131510;--line:#292c24;--text:#f4f5ed;
+  --muted:#8c9183;--acid:#d7ff36;--red:#ff4e49;--amber:#ffbd4a;--cyan:#62e6ff;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:
+radial-gradient(circle at 80% 0,rgba(215,255,54,.075),transparent 25%),
+radial-gradient(circle at 0 35%,rgba(98,230,255,.045),transparent 20%),var(--bg);
+color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+a{color:inherit}.wrap{max-width:980px;margin:auto;padding:0 18px}
+.top{position:sticky;top:0;z-index:20;background:rgba(5,5,5,.87);backdrop-filter:blur(18px);border-bottom:1px solid #181a16}
+.nav{height:62px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:950;text-decoration:none;letter-spacing:-.04em}.logo em{font-style:normal;color:var(--acid)}.live{font:800 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;color:var(--muted)}
+.hero{padding:62px 0 28px}.eyebrow{color:var(--acid);font:900 11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em}
+h1{font-size:clamp(47px,9vw,90px);line-height:.94;letter-spacing:-.065em;margin:13px 0 20px;font-weight:950}h1 i{font-style:normal;color:var(--acid)}
+.lead{max-width:700px;color:#b7baae;font-size:17px;line-height:1.8}.lead strong{color:#fff}
+.btn{border:0;border-radius:14px;padding:15px 19px;font-weight:950;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center}
+.btn.acid{background:var(--acid);color:#080808}.btn.dark{background:#151713;color:#e8eadf;border:1px solid var(--line)}
+.row{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.chip{border:1px solid #242720;border-radius:99px;padding:6px 9px;color:#9ba08f;font-size:11px}
+.section{padding:34px 0}.headline{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px}.headline h2{margin:0;font-size:clamp(28px,5vw,46px);letter-spacing:-.045em}.headline p{margin:0;max-width:470px;color:var(--muted);font-size:13px}
+.card{background:linear-gradient(180deg,#0f100e,#0a0b09);border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.35)}
+.checker{padding:20px;max-width:780px;margin:auto}.prog{height:4px;background:#22251e;border-radius:9px;overflow:hidden}.prog i{display:block;height:100%;background:var(--acid);width:0;transition:.2s}
+.meta{display:flex;justify-content:space-between;margin:15px 0 10px;font:800 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}.meta b{color:var(--acid)}
+.q{font-size:clamp(27px,5vw,39px);font-weight:950;letter-spacing:-.045em;line-height:1.13;margin:0 0 8px}.sub{font-size:13px;color:var(--muted);margin-bottom:17px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice{border:1px solid var(--line);background:#141612;color:#f0f1e9;border-radius:15px;padding:16px;text-align:left;font-weight:850;cursor:pointer}.choice:hover{border-color:var(--acid)}
+.input{width:100%;border:1px solid var(--line);background:#141612;color:white;border-radius:15px;padding:16px;outline:none;font-size:16px}.input:focus{border-color:var(--acid)}
+.actions{display:flex;gap:9px;margin-top:15px}.actions .btn{flex:1}
+.result{display:none}.resultHero{padding:22px}
+.topres{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}.kicker{font:850 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.15em;color:var(--muted)}.risk{font-size:clamp(39px,8vw,74px);line-height:1;font-weight:950;letter-spacing:-.07em}.risk.high{color:var(--red)}.risk.mid{color:var(--amber)}.risk.low{color:var(--acid)}
+.score{text-align:right}.score b{font-size:54px;letter-spacing:-.07em}.score small{color:var(--muted)}.gauge{height:11px;background:#24261f;border-radius:99px;overflow:hidden;margin:18px 0 7px}.gauge i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acid),var(--amber),var(--red));transition:1s}
+.labels{display:flex;justify-content:space-between;font:800 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#5f6259;letter-spacing:.12em}
+.market{margin-top:12px;border:1px solid #33401b;background:linear-gradient(180deg,#11170b,#0c0e09);border-radius:20px;padding:17px;position:relative;overflow:hidden}
+.market:after{content:"";position:absolute;inset:auto -50px -70px auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(215,255,54,.13),transparent 68%)}
+.markethead{display:flex;justify-content:space-between;gap:12px}.markethead b{font:950 11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;color:var(--acid)}.markethead span{font-size:10px;color:var(--muted)}
+.marketname{font-size:20px;font-weight:950;margin:8px 0 12px}.marketgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mcell{border-top:1px solid #29331a;padding-top:10px}.mcell span{display:block;color:#7f8675;font-size:10px}.mcell strong{display:block;font-size:23px;letter-spacing:-.04em;margin-top:3px}
+.delta{margin-top:11px;padding:11px 12px;border:1px solid #2c3421;border-radius:13px;background:#0b0d09;font-size:12px}.delta strong.up{color:var(--red)}.delta strong.down{color:var(--acid)}.delta strong.flat{color:#ddd}
+.source{font-size:10px;color:#6f7468;margin-top:10px;line-height:1.5}.source a{color:#8e967e}
+.alert{margin-top:10px;border:1px solid #3c2928;background:#160d0d;border-radius:18px;padding:16px}.alert span{font-size:11px;color:#988}.alert strong{display:block;color:var(--red);font-size:clamp(31px,6vw,49px);letter-spacing:-.05em}.alert p{margin:4px 0 0;color:#aaa49c;font-size:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}.stat{border:1px solid var(--line);border-radius:17px;background:#0b0c0a;padding:15px}.stat span{font-size:10px;color:var(--muted)}.stat b{display:block;font-size:19px;margin-top:5px}.stat p{font-size:11px;color:#858a7d;margin:5px 0 0}
+.trigger{margin-top:9px;border:1px solid var(--line);border-radius:17px;padding:15px;background:#0c0d0b;display:flex;justify-content:space-between;gap:12px;align-items:center}.trigger i{width:8px;height:8px;background:var(--amber);display:inline-block;border-radius:50%;margin-right:8px;box-shadow:0 0 16px rgba(255,189,74,.5)}
+.cta{margin-top:9px;background:var(--acid);color:#090909;border-radius:18px;padding:17px}.cta h3{font-size:23px;letter-spacing:-.04em;margin:0 0 5px}.cta p{font-size:13px;margin:0 0 12px}.cta .btn{width:100%;background:#090909;color:white}
+.memory{margin-top:9px;border:1px solid #20313a;background:#081014;border-radius:17px;padding:15px}.memory b{color:var(--cyan)}.memory p{font-size:12px;color:#91a0a4;margin:5px 0 0}
+.micro{font-size:10px;color:#70746a;line-height:1.6}.samples{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.sample{border:1px solid var(--line);border-radius:16px;padding:14px;background:#0b0c0a}.sample b{display:block}.sample span{font-size:11px;color:var(--muted)}
+footer{border-top:1px solid #1b1d19;margin-top:42px;padding:32px 0}.links{display:flex;gap:13px;flex-wrap:wrap;font-size:11px}.links a{text-decoration:none;color:#a4a89c}
+@media(max-width:700px){.choices,.grid2,.samples,.marketgrid{grid-template-columns:1fr}.headline{display:block}.headline p{margin-top:8px}.hero{padding-top:46px}}
+</style></head>
+<body><header class="top"><div class="wrap nav"><a href="#" class="logo">売り逃し<em>CHECKER</em></a><div class="live">V4 / MARKET PULSE</div></div></header>
+<main>
+<section class="hero"><div class="wrap"><div class="eyebrow">DON'T GUESS. WATCH THE MARKET.</div><h1>その車、<br><i>市場が動く前に</i><br>見とけ。</h1>
+<p class="lead">ただの診断じゃない。<strong>あなたの条件</strong>と<strong>実際の中古車市場スナップショット</strong>を重ねて、「今見る理由」を作る。</p>
+<div class="row"><a class="btn acid" href="#check">MARKET SCAN →</a></div>
+<div class="chips"><span class="chip">電話番号なし</span><span class="chip">登録なし</span><span class="chip">実市場スナップショット</span><span class="chip">前回比を記憶</span></div></div></section>
+<section class="section" id="check"><div class="wrap">
+<div class="headline"><h2>MARKET SCAN</h2><p>市場データがある車種は結果に実スナップショットを重ねる。ない車種は嘘を出さない。</p></div>
+<div class="card checker" id="checker"><div class="prog"><i id="bar"></i></div><div class="meta"><b>INPUT</b><span id="num"></span></div><h3 class="q" id="q"></h3><div class="sub" id="sub"></div><div id="ans"></div><div class="actions"><button class="btn dark" id="back">← 戻る</button></div></div>
+<div class="result" id="result"><div class="card resultHero">
+<div class="topres"><div><div class="kicker">売り逃しリスク</div><div class="risk" id="risk">—</div></div><div class="score"><b id="score">0</b><br><small>/100</small></div></div>
+<div class="gauge"><i id="fill"></i></div><div class="labels"><span>KEEP</span><span>WATCH</span><span>EXIT</span></div>
+
+<div class="market" id="marketBox">
+<div class="markethead"><b>MARKET PULSE</b><span id="marketStatus">—</span></div>
+<div class="marketname" id="marketName">—</div>
+<div class="marketgrid"><div class="mcell"><span>市場平均</span><strong id="avg">—</strong></div><div class="mcell"><span>掲載規模</span><strong id="count">—</strong></div><div class="mcell"><span>掲載価格帯</span><strong id="range">—</strong></div></div>
+<div class="delta" id="mdelta"></div><div class="source" id="source"></div></div>
+<div class="memory" id="marketMissing" style="display:none"><b>MARKET DATA 未接続</b><p>この車種は今のデモ用公開スナップショットに未登録。正式版では公式APIから取得する設計済み。架空の相場は表示しません。</p></div>
+
+<div class="alert"><span>6か月待った場合</span><strong id="loss">—</strong><p id="lossNote"></p></div>
+<div class="grid2"><div class="stat"><span>あなた向き</span><b id="method">—</b><p id="why"></p></div><div class="stat"><span>NEXT TRIGGER</span><b id="trigger">—</b><p id="when">—</p></div></div>
+<div class="cta"><h3>「売る」じゃなく、まず価格を見る。</h3><p>実際の査定額が気になった人だけ次へ。ここまでは登録なし。</p><a class="btn" id="ctaBtn" href="disclosure.html">査定方法を見る</a></div>
+<p class="micro" style="margin-top:11px">※ 市場平均は中古車掲載市場の参考値であり、あなたの車の買取査定額ではありません。6か月レンジも参考試算で、将来価格を保証しません。</p>
+<div class="actions"><button class="btn dark" id="again">距離を更新して再チェック</button></div>
+</div></div>
+</div></section>
+
+<section class="section"><div class="wrap"><div class="headline"><h2>DEMO DATA</h2><p>V4ローカル版で現在スナップショットを表示できる車種。正式版ではAPI化。</p></div>
+<div class="samples">
+<div class="sample"><b>BRZ</b><span>市場平均 / 掲載規模</span></div><div class="sample"><b>プリウス</b><span>市場平均 / 掲載規模</span></div><div class="sample"><b>N-BOX</b><span>市場平均 / 掲載規模</span></div>
+<div class="sample"><b>ヴォクシー</b><span>市場平均 / 掲載規模</span></div><div class="sample"><b>アルファード</b><span>市場平均 / 掲載規模</span></div><div class="sample"><b>ハリアー</b><span>市場平均 / 掲載規模</span></div>
+</div></div></section>
+
+<section class="section" id="about"><div class="wrap">
+<div class="headline"><h2>このサイトについて</h2></div>
+<div class="card" style="padding:18px">
+<p class="lead" style="font-size:14px">売り逃しCHECKERは、車を査定に出す前に「今動く理由があるか」を整理する判断支援ツールです。電話番号やメールアドレスを入力せず、年式・走行距離・車検時期などから参考スコアを表示します。市場平均は個別車両の買取査定額ではありません。</p>
+</div></div></section>
+
+<section class="section" id="privacy"><div class="wrap">
+<div class="headline"><h2>プライバシーポリシー</h2></div>
+<div class="card" style="padding:18px">
+<p class="lead" style="font-size:14px">無料診断では電話番号・メールアドレスを求めません。入力した診断内容や前回比較用データは、現在の版では利用者のブラウザ内（localStorage）に保存されます。外部の査定サービスへ移動した後に入力する情報は、各サービス提供者の方針に従います。公開後にアクセス解析やCookie等を導入する場合は、本項目に追記します。</p>
+</div></div></section>
+
+<section class="section" id="disclosure"><div class="wrap">
+<div class="headline"><h2>広告・アフィリエイト表記</h2></div>
+<div class="card" style="padding:18px">
+<p class="lead" style="font-size:14px">本サイトは成果報酬型広告（アフィリエイト広告）を掲載する場合があります。広告リンクを経由して申込・契約等が成立した場合、運営者が広告主またはASPから報酬を受け取ることがあります。広告報酬の有無のみを理由として売り逃しスコアを変更する設計にはしません。</p>
+</div></div></section>
+
+<section class="section" id="faq"><div class="wrap">
+<div class="headline"><h2>FAQ</h2></div>
+<div class="grid2">
+<div class="stat"><span>Q</span><b>診断だけで営業電話は来る？</b><p>来ません。診断では電話番号を入力しません。</p></div>
+<div class="stat"><span>Q</span><b>市場平均＝自分の買取額？</b><p>違います。中古車掲載市場の参考値です。</p></div>
+<div class="stat"><span>Q</span><b>前回比は本物？</b><p>同じブラウザに保存した前回値と今回値が変化した場合のみ表示します。</p></div>
+<div class="stat"><span>Q</span><b>今すぐ売らないとダメ？</b><p>いいえ。「売る」ではなく、まず現在地を確認するためのツールです。</p></div>
+</div></div></section>
+
+<section class="section" id="contact"><div class="wrap">
+<div class="headline"><h2>お問い合わせ</h2></div>
+<div class="card" style="padding:18px">
+<p class="lead" style="font-size:14px">現在はベータ公開中です。広告提携審査を行う前に、実際に連絡可能な問い合わせ窓口へ差し替えます。</p>
+</div></div></section>
+
+</main>
+<footer><div class="wrap"><div class="links"><a href="#about">このサイトについて</a><a href="#privacy">プライバシー</a><a href="#disclosure">広告表記</a><a href="#faq">FAQ</a><a href="#contact">お問い合わせ</a></div><p class="micro">V4 MARKET PULSE / 公開スナップショット取得基準日 2026-09-05</p></div></footer>
+<script>
+const STATIC_MARKET={"BRZ": {"aliases": ["brz", "ＢＲＺ", "スバルbrz", "スバル brz"], "overallAvg": 239.8, "latestAvg": 299.0, "latestFrom": 2021, "count": 558, "min": 76.9, "max": 685.0, "source": "https://www.carsensor.net/usedcar/souba/SB_S049/", "label": "スバル BRZ"}, "プリウス": {"aliases": ["prius", "トヨタプリウス", "トヨタ プリウス"], "overallAvg": 172.0, "latestAvg": 325.2, "latestFrom": 2022, "count": 9228, "min": 195.0, "max": 550.0, "source": "https://www.carsensor.net/usedcar/bTO/s122/index.html", "label": "トヨタ プリウス"}, "N-BOX": {"aliases": ["n-box", "nbox", "Ｎ－ＢＯＸ", "ホンダn-box", "ホンダ n-box", "エヌボックス"], "overallAvg": 135.9, "latestAvg": 171.6, "latestFrom": 2023, "count": 27062, "min": 78.8, "max": 389.3, "source": "https://www.carsensor.net/usedcar/bHO/s094/index.html", "label": "ホンダ N-BOX"}, "ヴォクシー": {"aliases": ["voxy", "ボクシー", "トヨタヴォクシー", "トヨタ ヴォクシー"], "overallAvg": 260.9, "latestAvg": 378.7, "latestFrom": 2021, "count": 6670, "min": 216.2, "max": 609.0, "source": "https://www.carsensor.net/usedcar/bTO/s021/index.html", "label": "トヨタ ヴォクシー"}, "アルファード": {"aliases": ["alphard", "トヨタアルファード", "トヨタ アルファード"], "overallAvg": 410.0, "latestAvg": 620.7, "latestFrom": 2023, "count": 7596, "min": 458.0, "max": 1365.0, "source": "https://www.carsensor.net/usedcar/bTO/s009/index.html", "label": "トヨタ アルファード"}, "ハリアー": {"aliases": ["harrier", "トヨタハリアー", "トヨタ ハリアー"], "overallAvg": 318.0, "latestAvg": 343.9, "latestFrom": 2020, "count": 5446, "min": 189.0, "max": 677.5, "source": "https://www.carsensor.net/usedcar/bTO/s114/index.html", "label": "トヨタ ハリアー"}};
+const state={};let step=0;
+const profileKey="urinigashi_v4_profile", marketHistoryKey="urinigashi_v4_market_history";
+const steps=[
+{k:"car",q:"愛車は？",sub:"車種だけでOK。BRZ / プリウス / N-BOX など",t:"text",ph:"例：BRZ"},
+{k:"year",q:"初度登録は？",sub:"年式で市場スナップショットの世代判定も変えます。",t:"number",ph:"例：2018"},
+{k:"km",q:"走行距離は？",sub:"次回はここだけ更新して、前回との差を見られます。",t:"number",ph:"例：68000"},
+{k:"monthly",q:"月にどれくらい走る？",sub:"10万km到達までのカウントに使います。",t:"choices",c:[["300","〜300km"],["700","300〜700km"],["1200","700〜1,200km"],["1800","1,200km〜"]]},
+{k:"inspection",q:"次の車検は？",sub:"近いほど「今相場を見る理由」が強くなります。",t:"month"},
+{k:"loan",q:"ローン残債は？",sub:"なしでもOK。",t:"choices",c:[["0","なし"],["30","〜30万円"],["80","30〜80万円"],["150","80万円超"]]},
+{k:"priority",q:"何を一番優先？",sub:"最後の査定導線を変えます。",t:"choices",c:[["price","1円でも高く"],["phone","電話は嫌"],["easy","面倒は嫌"],["speed","早く現金化"]]}
+];
+function $(s){return document.querySelector(s)}
+function norm(s){return (s||"").toLowerCase().replace(/[\s　]/g,"").replace(/－/g,"-")}
+function findStatic(car){
+ const n=norm(car);
+ for(const [name,d] of Object.entries(STATIC_MARKET)){
+   const pool=[name,...(d.aliases||[])].map(norm);
+   if(pool.some(x=>n===x||n.includes(x)||x.includes(n)))return {...d,key:name};
+ }
+ return null;
+}
+try{Object.assign(state,JSON.parse(localStorage.getItem(profileKey)||"{}"))}catch(e){}
+function render(){
+ const s=steps[step];$("#bar").style.width=(step/steps.length*100)+"%";$("#num").textContent=`${step+1} / ${steps.length}`;
+ $("#q").textContent=s.q;$("#sub").textContent=s.sub;$("#ans").innerHTML="";$("#back").style.visibility=step?"visible":"hidden";
+ if(s.t==="choices"){
+   const w=document.createElement("div");w.className="choices";
+   s.c.forEach(([v,l])=>{const b=document.createElement("button");b.className="choice";b.textContent=l;b.onclick=()=>{state[s.k]=v;next()};w.appendChild(b)});$("#ans").appendChild(w);
+ }else{
+   const i=document.createElement("input");i.className="input";i.placeholder=s.ph||"";i.type=s.t==="month"?"month":s.t==="number"?"number":"text";i.value=state[s.k]||"";
+   const a=document.createElement("div");a.className="actions";const n=document.createElement("button");n.className="btn acid";n.textContent="次へ";n.onclick=()=>{if(!i.value.trim()){i.focus();return}state[s.k]=i.value.trim();next()};a.appendChild(n);$("#ans").append(i,a);
+ }
+}
+function next(){if(step<steps.length-1){step++;render()}else show()}
+$("#back").onclick=()=>{if(step){step--;render()}};
+function riskCalc(){
+ const now=new Date(),age=Math.max(0,now.getFullYear()-(+state.year||now.getFullYear())),km=+state.km||0,monthly=+state.monthly||700;
+ let idays=9999;if(state.inspection)idays=Math.max(0,Math.ceil((new Date(state.inspection+"-01")-now)/86400000));
+ let sc=18+Math.min(30,age*3.6)+Math.min(25,km/10000*2.8);
+ if(idays<=60)sc+=22;else if(idays<=120)sc+=16;else if(idays<=240)sc+=9;else if(idays<=365)sc+=4;
+ if(km>=90000&&km<100000)sc+=10;else if(km>=100000)sc+=6;if(+state.loan>=80)sc+=5;sc=Math.max(18,Math.min(96,Math.round(sc)));
+ let level=sc>=78?"高":sc>=58?"警戒":"低", klass=sc>=78?"high":sc>=58?"mid":"low";
+ let trigger="車検期限",when=idays<9999?`約${idays}日`:"未入力",td=idays;
+ if(km<100000){const left=100000-km,d=Math.ceil(left/monthly*30.4);if(d<td){trigger="10万km到達";when=`約${d}日 / 残り${left.toLocaleString()}km`;}}
+ return {sc,level,klass,trigger,when,age,km};
+}
+async function liveMarket(){ return null; }
+function staticMarket(){
+ const d=findStatic(state.car);if(!d)return null; const y=+state.year||0;
+ const avg=(y>=d.latestFrom)?d.latestAvg:d.overallAvg;
+ return {average:avg,count:d.count,min:d.min,max:d.max,label:d.label,source:d.source,mode:"snapshot",captured:"2026-09-05"};
+}
+function getMarketDelta(m){
+ let h={};try{h=JSON.parse(localStorage.getItem(marketHistoryKey)||"{}")}catch(e){}
+ const key=norm(state.car),prev=h[key];
+ h[key]={average:m.average,count:m.count,at:new Date().toISOString()};
+ localStorage.setItem(marketHistoryKey,JSON.stringify(h));
+ if(!prev||!prev.average)return null;
+ return {price:+(m.average-prev.average).toFixed(1),count:(m.count||0)-(prev.count||0),date:prev.at};
+}
+async function show(){
+ $("#checker").style.display="none";$("#result").style.display="block";$("#marketStatus").textContent="MARKET DATA LOADING…";
+ const r=riskCalc();$("#risk").textContent=r.level;$("#risk").className=`risk ${r.klass}`;$("#score").textContent=r.sc;setTimeout(()=>$("#fill").style.width=r.sc+"%",60);
+ $("#trigger").textContent=r.trigger;$("#when").textContent=r.when;
+ let method="複数社比較",why="高値を狙うなら1社だけで決めず比較。",cta="高値重視の査定方法を見る";
+ if(state.priority==="phone"){method="連絡窓口少なめ";why="電話ストレスを抑える方式を優先。";cta="電話少なめの方法を見る"}
+ if(state.priority==="easy"){method="手間少なめ";why="最高値だけでなく対応の少なさを優先。";cta="手間少なめの方法を見る"}
+ if(state.priority==="speed"){method="スピード重視";why="査定から売却までの短さを優先。";cta="早く売る方法を見る"}
+ $("#method").textContent=method;$("#why").textContent=why;$("#ctaBtn").textContent=cta;
+ let m=await liveMarket();if(!m)m=staticMarket();
+ if(m){
+   $("#marketBox").style.display="block";$("#marketMissing").style.display="none";
+   $("#marketStatus").textContent=m.mode==="live"?"LIVE API":"PUBLIC SNAPSHOT";
+   $("#marketName").textContent=m.label||state.car;
+   $("#avg").textContent=`${(+m.average).toFixed(1)}万円`;
+   $("#count").textContent=(m.count||0).toLocaleString()+"台";
+   $("#range").textContent=m.min!=null?`${m.min}〜${m.max}万`:"—";
+   $("#source").innerHTML=`出典：カーセンサー公開情報 / ${m.captured||"取得時点"}　<a target="_blank" rel="noopener" href="${m.source||"#"}">元データ</a>`;
+   const delta=getMarketDelta(m);
+   if(delta){
+     $("#mdelta").style.display="block";
+     const sign=delta.price>0?"+":""; const cl=delta.price>0?"up":delta.price<0?"down":"flat";
+     $("#mdelta").innerHTML=`前回スナップショット比　<strong class="${cl}">${sign}${delta.price}万円</strong>　/ 掲載台数 ${delta.count>=0?"+":""}${delta.count.toLocaleString()}`;
+   }else{$("#mdelta").style.display="block";$("#mdelta").innerHTML=`<strong class="flat">初回スナップショット保存</strong>　次回データが変わった時だけ「前回比」を表示します。`;}
+   const est=Math.max(1,Math.round(m.average*(0.025+r.age*.004)));const estHi=Math.max(est+1,Math.round(m.average*(0.055+r.age*.005)));
+   $("#loss").textContent=`-${est}〜${estHi}万円`;
+   $("#lossNote").textContent="市場平均を基準にした6か月参考レンジ（個別査定額ではありません）";
+ }else{
+   $("#marketBox").style.display="none";$("#marketMissing").style.display="block";$("#loss").textContent="市場データ待ち";$("#lossNote").textContent="この車種は公開スナップショット未登録。API接続後に自動取得。";
+ }
+ localStorage.setItem(profileKey,JSON.stringify({...state,savedAt:new Date().toISOString(),score:r.sc}));
+ location.hash="result";
+}
+$("#again").onclick=()=>{step=2;$("#result").style.display="none";$("#checker").style.display="block";render();location.hash="check"};
+render();
+</script></body></html>
